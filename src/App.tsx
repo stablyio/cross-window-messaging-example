@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react"
 
 function App() {
+
+  useEffect(() => {
+    window.addEventListener("message", (event) => {
+  
+      console.log('app', event)
+  
+    }, false)
+  }, [])
+
+  function sendMessage(message: string) {
+    const refIframe: any = document.querySelector('#windowFrame')
+    if (!refIframe) { return }
+
+    try {
+      refIframe.contentWindow.postMessage(message, "http://localhost:3000")
+    } catch (e) {
+      console.warn('error while posting message')
+    }
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <h1>App</h1>
+        <button onClick={ev => sendMessage("Hello Iframe Window")}>Send Message to Window</button>
+      </div>
+      <hr />
+      <iframe id="windowFrame" title="window" src="http://localhost:3000/window" width={200} height={400}></iframe>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
