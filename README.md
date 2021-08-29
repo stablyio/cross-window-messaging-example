@@ -6,3 +6,9 @@ this example is to demonstrate communicating between window and iframe using `wi
 ```
 yarn start
 ```
+
+**open console window to see data interaction between parent/child**
+
+
+
+
