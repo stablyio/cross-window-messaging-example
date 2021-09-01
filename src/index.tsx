@@ -9,11 +9,19 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Login from './login';
+import Callback from './callback';
 
 
 ReactDOM.render(
   <Router>
     <Switch>
+      <Route path="/login">
+        <Login />
+      </Route>
+      <Route path="/callback">
+        <Callback />
+      </Route>
       <Route path="/window">
         <Window />
       </Route>

@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react';
+import sdk from './sdk';
 
 function App() {
 
-  useEffect(() => {
-    window.addEventListener("message", (event) => {
-
-      console.log('window', event);
-
-    }, false)
-  }, [])
-
   function sendMessage(message: string) {
     try {
-      window.parent.postMessage(message, "http://localhost:3000")
+      sdk.post({
+        type: "message",
+        payload: message
+      }, window.parent)
     } catch (e) {
       console.warn('error while posting message')
     }
