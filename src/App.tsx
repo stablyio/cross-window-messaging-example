@@ -1,6 +1,11 @@
+import { useEffect } from "react"
 import sdk from "./sdk"
 
 function App() {
+
+  useEffect(() => {
+    sdk.listen(window, 'http://localhost:3000');
+  }, [])
 
   function sendMessage(message: string) {
     const refIframe: any = document.querySelector('#windowFrame')
@@ -8,7 +13,7 @@ function App() {
 
     try {
       sdk.post({
-        type: "message",
+        type: "fromParent",
         payload: message
       }, refIframe.contentWindow)
     } catch (e) {
