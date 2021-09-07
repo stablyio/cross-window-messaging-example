@@ -25,8 +25,6 @@ export default function Login() {
         redirectURI: new URL("/callback", window.location.origin).href,
       })
 
-      // console.log('send token', token);
-
       if (window.parent) {
         sdk.post({
           type: 'magic-link-token',

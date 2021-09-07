@@ -6,10 +6,6 @@ interface postEvent {
 class SimpleSDK {
     origin: string = window.location.origin;
 
-    constructor() {
-        // this.listen(window);
-    }
-
     post(postEvent: postEvent, target: Window, origin: string = window.location.origin) {
         target.postMessage(postEvent, origin)
     }
@@ -17,7 +13,7 @@ class SimpleSDK {
     listen(target: Window, senderUrl: string) {
         target.addEventListener("message", (event) => {
             // only receive msg from trusted senderUrl
-            if(event.origin == senderUrl) {
+            if(event.origin === senderUrl) {
                 switch (event.data.type) {
                     case 'magic-link-token':
                         this.mockGenerateJWT(event.data.payload.token);
