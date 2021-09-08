@@ -6,20 +6,27 @@ interface postEvent {
 class SimpleSDK {
     origin: string = window.location.origin;
 
-    constructor() {
-        this.listen(window);
-    }
-
     post(postEvent: postEvent, target: Window, origin: string = window.location.origin) {
         target.postMessage(postEvent, origin)
     }
 
-    listen(target: Window) {
+    listen(target: Window, senderUrl: string) {
         target.addEventListener("message", (event) => {
-            switch (event.type) {
-                case 'magic-link-token':
-                    this.mockGenerateJWT(event.data.payload.token);
-                    break;
+            // only receive msg from trusted senderUrl
+            if(event.origin === senderUrl) {
+                switch (event.data.type) {
+                    case 'magic-link-token':
+                        this.mockGenerateJWT(event.data.payload.token);
+                        break;
+                    case 'fromParent':
+                        console.log(event.data.payload);
+                        break;
+                    case 'fromIframe':
+                        console.log(event.data.payload);
+                        break;
+                }
+            } else {
+                console.error("should not receive msg from unauthorized urls");
             }
         }, false)
     }

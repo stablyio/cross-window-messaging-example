@@ -5,7 +5,7 @@ function App() {
   function sendMessage(message: string) {
     try {
       sdk.post({
-        type: "message",
+        type: "fromIframe",
         payload: message
       }, window.parent)
     } catch (e) {

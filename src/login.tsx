@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useHistory } from "react-router"
 import { magic } from "./magic"
 import sdk from "./sdk"
@@ -7,6 +7,10 @@ export default function Login() {
   const [email, setEmail] = useState("")
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const history = useHistory()
+
+  useEffect(() => {
+    sdk.listen(window, 'http://localhost:3000');
+  }, [])
 
   /**
    * Perform login action via Magic's passwordless flow. Upon successuful
@@ -20,8 +24,6 @@ export default function Login() {
         email,
         redirectURI: new URL("/callback", window.location.origin).href,
       })
-
-      console.log('send token', token);
 
       if (window.parent) {
         sdk.post({
